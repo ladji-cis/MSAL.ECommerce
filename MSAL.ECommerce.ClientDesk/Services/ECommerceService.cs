@@ -16,14 +16,15 @@ namespace MSAL.ECommerce.ClientDesk.Services
 
         public ECommerceService(HttpClient httpClient)
         {
-            _httpClient = httpClient;
-
-            //_httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "");
+            _httpClient = httpClient;            
         }
 
         public async Task<ICollection<Product>> GetAllProductsAsync()
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", App.AuthenticationResult?.AccessToken);
+
             var response = await _httpClient.GetAsync("api/products");
+
             if (response.IsSuccessStatusCode)
             {
                 var strContent = await response.Content.ReadAsStringAsync();
@@ -31,7 +32,7 @@ namespace MSAL.ECommerce.ClientDesk.Services
                 return products.ToList();
             }
 
-            throw new ApiCallException(response.StatusCode, response.ReasonPhrase);
+            throw new ApiCallException((int)response.StatusCode, response.ReasonPhrase);
         }
     }
 }

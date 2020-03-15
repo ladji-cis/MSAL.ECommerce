@@ -7,11 +7,11 @@ namespace MSAL.ECommerce.ClientDesk.Exceptions
 {
     public class ApiCallException : Exception
     {
-        public ApiCallException(HttpStatusCode statusCode, string message) : base(message)
+        public ApiCallException(int statusCode, string message) : base(message)
         {
             StatusCode = statusCode;
         }
 
-        public HttpStatusCode StatusCode { get; }
+        public int StatusCode { get; }
     }
 }

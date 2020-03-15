@@ -12,6 +12,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
+using Microsoft.Identity.Client;
+using System.Globalization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 namespace MSAL.ECommerce.ClientDesk
 {
     /// <summary>
@@ -23,13 +27,25 @@ namespace MSAL.ECommerce.ClientDesk
 
         public IConfiguration Configuration { get; private set; }
 
+        public static IPublicClientApplication PublicClientApp;
+
+        public static AuthenticationResult AuthenticationResult;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             var builder = new ConfigurationBuilder()
              .SetBasePath(Directory.GetCurrentDirectory())
              .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
+            
             Configuration = builder.Build();
+
+            PublicClientApp = PublicClientApplicationBuilder.Create(Configuration["AzureAd:ClientId"])
+                .WithAuthority(AzureCloudInstance.AzurePublic, Configuration["AzureAd:Domain"])
+                .WithDebugLoggingCallback(LogLevel.Verbose)     
+                .WithRedirectUri(Configuration["AzureAd:RedirectUri"])
+                .Build();
+
+            TokenCacheHelper.EnableSerialization(PublicClientApp.UserTokenCache);;
 
             var serviceCollection = new ServiceCollection();
             
@@ -52,8 +68,13 @@ namespace MSAL.ECommerce.ClientDesk
             {
                 cfg.BaseAddress = new Uri(Configuration["AppSettings:ECommerceApiUrl"]);
             })
-                .SetHandlerLifetime(TimeSpan.FromMinutes(5))
-                ;//.AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, () => TimeSpan.FromSeconds(5)));
+            .SetHandlerLifetime(TimeSpan.FromMinutes(5));
+            //.AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, () => TimeSpan.FromSeconds(5)));
+
+            services.AddHttpClient<IMsGraphService, MsGraphService>(cfg =>
+            {
+                cfg.BaseAddress = new Uri(Configuration["AppSettings:MsGraphApiUrl"]);
+            }).SetHandlerLifetime(TimeSpan.FromMinutes(5));
         }
     }
 }

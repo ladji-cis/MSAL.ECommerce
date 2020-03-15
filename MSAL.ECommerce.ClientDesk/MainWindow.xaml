@@ -17,9 +17,9 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="btnLogin" Grid.Row="0" Grid.Column="0">Login</Button>
+        <Button x:Name="BTN_Login" Grid.Row="0" Grid.Column="0" Click="BTN_Login_Click">LogIn</Button>
 
-        <Button x:Name="btnLoadData" Grid.Row="0" Grid.Column="1" Click="btnLoadData_Click">Load Data</Button>
+        <Button x:Name="BTN_LoadData" Grid.Row="0" Grid.Column="1" Click="BTN_LoadData_Click">Load Data</Button>
         
         <Label x:Name="LBL_MessageInfo" Grid.Row="1" Grid.ColumnSpan="2"/>
         

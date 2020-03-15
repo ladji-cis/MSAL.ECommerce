@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSAL.ECommerce.Api", "MSAL.ECommerce.Api\MSAL.ECommerce.Api.csproj", "{E914D697-48BA-4682-BC01-5A3E7F1946BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSAL.ECommerce.ClientDesk", "MSAL.ECommerce.ClientDesk\MSAL.ECommerce.ClientDesk.csproj", "{EBDE3985-2EE1-4185-BABE-45A8EB230EDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSAL.ECommerce.ClientDesk", "MSAL.ECommerce.ClientDesk\MSAL.ECommerce.ClientDesk.csproj", "{EBDE3985-2EE1-4185-BABE-45A8EB230EDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSAL.ECommerce.ClientSpa", "MSAL.ECommerce.ClientSpa\MSAL.ECommerce.ClientSpa.csproj", "{E29EFD01-2FF5-4E4B-9D8A-DA94E4A4F693}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSAL.ECommerce.ClientSpa", "MSAL.ECommerce.ClientSpa\MSAL.ECommerce.ClientSpa.csproj", "{E29EFD01-2FF5-4E4B-9D8A-DA94E4A4F693}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSAL.ECommerce.Shared", "MSAL.ECommerce.Shared\MSAL.ECommerce.Shared.csproj", "{BFEB665D-3734-430E-A98C-D0C23AF28B10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSAL.ECommerce.Shared", "MSAL.ECommerce.Shared\MSAL.ECommerce.Shared.csproj", "{BFEB665D-3734-430E-A98C-D0C23AF28B10}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{B0526CDF-0AA1-4C23-8065-461E1CC2602D}"
 EndProject
