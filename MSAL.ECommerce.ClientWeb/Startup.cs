@@ -44,8 +44,11 @@ namespace MSAL.ECommerce.ClientWeb
                 var authPolicy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .Build();
-                //options.Filters.Add(new AuthorizeFilter(authPolicy));
+                options.Filters.Add(new AuthorizeFilter(authPolicy));
             });
+
+            //services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
+            //    .AddAzureAD(options => Configuration.Bind("AzureAd"));
 
             services.AddMicrosoftIdentityPlatformAuthentication(Configuration, "AzureAd", true)
                       .AddMsal(Configuration, Scopes)
@@ -55,9 +58,10 @@ namespace MSAL.ECommerce.ClientWeb
             {
                 //options.Authority = options.Authority + "/v2.0/";
                 options.SaveTokens = true;
+
                 //A list of parameters for token validation. 
                 //In this case, ValidateIssuer is set to false to indicate that it can accept sign-ins from any personal, or work or school accounts.
-                options.TokenValidationParameters.ValidateIssuer = false;
+                //options.TokenValidationParameters.ValidateIssuer = false;
 
                 options.Events.OnAuthenticationFailed = (ctx) => 
                 { 

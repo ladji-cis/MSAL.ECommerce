@@ -1,10 +1,44 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
+﻿@using MSAL.ECommerce.Shared;
+
+@{
+    ViewData["Title"] = "Privacy";
 }
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
 
-<pre>
-@ViewBag.Error
-</pre>
+@{
+    var userInfo = (UserInfo)ViewBag.UserInfo;
+    if (userInfo == null)
+    {
+        <pre>
+            @ViewBag.Error
+        </pre>
+    }
+    else
+    {
+        <h3>GraphAPI: User Info</h3>
+
+        <div class="container">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">UserPrincipalName</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">@userInfo.Id</th>
+                        <td>@userInfo.DisplayName</td>
+                        <td>@userInfo.Email</td>
+                        <td>@userInfo.UserPrincipalName</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+}
+

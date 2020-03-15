@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Identity.Client;
 using Microsoft.Identity.Web;
-using Microsoft.Identity.Web.Resource;
 using MSAL.ECommerce.ClientWeb.Models;
+using MSAL.ECommerce.Shared;
+using Newtonsoft.Json;
 
 namespace MSAL.ECommerce.ClientWeb.Controllers
 {
@@ -23,15 +20,9 @@ namespace MSAL.ECommerce.ClientWeb.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        readonly ITokenAcquisition _tokenAcquisition;
-        private HttpContext _httpContext;
-        static string[] _scopeRequiredByAPI = new string[] { "user.read" };
-
-        public HomeController(ILogger<HomeController> logger, ITokenAcquisition tokenAcquisition, IHttpContextAccessor httpContextAccessor)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _tokenAcquisition = tokenAcquisition;
-            _httpContext = httpContextAccessor.HttpContext;
         }
 
         [AllowAnonymous]
@@ -43,22 +34,40 @@ namespace MSAL.ECommerce.ClientWeb.Controllers
         [AuthorizeForScopes(Scopes = new[] { "user.read" })]
         public async Task<IActionResult> Privacy()
         {
-            string[] scopes = new[] { "user.read" };
-            //HttpContext.VerifyUserHasAnyAcceptedScope(_scopeRequiredByAPI);
             try
             {
-                var accessToken = await HttpContext.GetTokenAsync("id_token");
                 var accessToken = await HttpContext.GetTokenAsync("access_token");
-                var accessToken2 = HttpContext.GetTokenUsedToCallWebAPI();
-                    ///await _tokenAcquisition.GetAccessTokenOnBehalfOfUserAsync(scopes, Startup.AppCfg["AzureAd:TenantId"]);
+                var userInfo = await GetUserInfoAsync(accessToken);
+                ViewBag.UserInfo = userInfo;
             }
             catch(Exception ex)
             {
                 ViewBag.Error = ex.Message;
-                //_tokenAcquisition.ReplyForbiddenWithWwwAuthenticateHeader(scopes, new MsalUiRequiredException("500", ex.Message));
             }
             
             return View();
+        }
+
+        private async Task<UserInfo> GetUserInfoAsync(string accessToken)
+        {
+            var httpClient = new HttpClient();
+
+            var graphApiUrl = "https://graph.microsoft.com/v1.0";
+
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, $"{graphApiUrl}/me");
+
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+
+            var response = await httpClient.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var userInfo = JsonConvert.DeserializeObject<UserInfo>(content);
+                return userInfo;
+            }
+
+            return null;
         }
 
         [AllowAnonymous]
@@ -77,12 +86,8 @@ namespace MSAL.ECommerce.ClientWeb.Controllers
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                //await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
-                //await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
                 await HttpContext.SignOutAsync("AzureAD");                
                 await HttpContext.SignOutAsync("AzureADCookie");
-
-                //await HttpContext.SignOutAsync("AzureADOpenID");
             }
 
             return RedirectToAction("Index");

@@ -30,7 +30,6 @@ namespace MSAL.ECommerce.ClientDesk.Services
             var content = await response.Content.ReadAsStringAsync();
             var products = JsonConvert.DeserializeObject<UserInfo>(content);
             return null;
-            return products.ToList();
 
             //var response = await _httpClient.GetAsync("users");
 
