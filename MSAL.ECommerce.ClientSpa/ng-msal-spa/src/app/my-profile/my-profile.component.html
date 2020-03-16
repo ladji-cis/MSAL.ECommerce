@@ -1,0 +1,33 @@
+<h2>my-profile !</h2>
+<div class="content">
+  <div class="content-left">
+    <h3>My profile</h3>
+    <hr>
+    <pre>
+      {{userAccount | json}}
+    </pre>
+  </div>
+  <div class="content-right">
+    <h3>All Users in my Azure AD:</h3>
+    <hr>
+    <table class="table">
+      <thead class="thead-dark">
+          <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">UserPrincipalName</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+            <th scope="row">{{user.id}}</th>
+            <td>{{user.displayName}}</td>
+            <td>{{user.mail}}</td>
+            <td>{{user.userPrincipalName}}</td>
+        </tr>
+      </tbody>
+  </table>
+  </div>
+</div>
+

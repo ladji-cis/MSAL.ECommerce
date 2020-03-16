@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
@@ -17,6 +18,9 @@ using Microsoft.Identity.Web;
 //using Microsoft.Identity.Web.UI;
 using Microsoft.Identity.Web.TokenCacheProviders.InMemory;
 using Microsoft.IdentityModel.Logging;
+using MSAL.ECommerce.Shared;
+using MSAL.ECommerce.Shared.Services;
+using Polly;
 
 namespace MSAL.ECommerce.ClientWeb
 {
@@ -34,7 +38,8 @@ namespace MSAL.ECommerce.ClientWeb
 
         public static IConfiguration AppCfg;
 
-        public static string[] Scopes = new string[] { "User.Read", "https://lacisorg.onmicrosoft.com/EcommerceApi/myscope" };
+        public static string[] Scopes = new string[] { "User.Read", "User.Read.All", "profile", "Directory.Read.All", "https://lacisorg.onmicrosoft.com/EcommerceApi/myscope" };
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -78,6 +83,26 @@ namespace MSAL.ECommerce.ClientWeb
                     return Task.FromResult(0);
                 };
             });
+
+            services.AddHttpClient();
+
+            services.AddHttpClient<IECommerceService, ECommerceService>(client =>
+            {                
+                client.BaseAddress = new Uri(Configuration["AppSettings:ECommerceApiUrl"]);
+                client.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3+json");
+            })
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+                .AddTransientHttpErrorPolicy(builder => builder.WaitAndRetryAsync(new[]
+                {
+                    TimeSpan.FromSeconds(1),
+                    TimeSpan.FromSeconds(5),
+                    TimeSpan.FromSeconds(10)
+                }))
+                //.AddTransientHttpErrorPolicy(builder => builder.CircuitBreakerAsync(
+                //    handledEventsAllowedBeforeBreaking: 3,
+                //    durationOfBreak: TimeSpan.FromSeconds(30)
+                //))
+                ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Identity.Client;
-using Microsoft.Identity.Client.Extensibility;
-using MSAL.ECommerce.ClientDesk.Exceptions;
 using MSAL.ECommerce.Shared;
+using MSAL.ECommerce.Shared.Exceptions;
+using MSAL.ECommerce.Shared.Services;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,8 +31,8 @@ namespace MSAL.ECommerce.ClientDesk
         {           
             try
             {
-                var users = await _msGraphService.GetUserInfoAsync();
-                var products = await _eCommerceService.GetAllProductsAsync();
+                var users = await _msGraphService.GetUserInfoAsync(App.AuthenticationResult?.AccessToken);
+                var products = await _eCommerceService.GetAllProductsAsync(App.AuthenticationResult?.AccessToken);
                 DG_Propducts.ItemsSource = products;
                 DG_Propducts.Visibility = Visibility.Visible;
             }

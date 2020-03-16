@@ -7,13 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSAL.ECommerce.Api", "MSAL.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSAL.ECommerce.ClientDesk", "MSAL.ECommerce.ClientDesk\MSAL.ECommerce.ClientDesk.csproj", "{EBDE3985-2EE1-4185-BABE-45A8EB230EDC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSAL.ECommerce.ClientSpa", "MSAL.ECommerce.ClientSpa\MSAL.ECommerce.ClientSpa.csproj", "{E29EFD01-2FF5-4E4B-9D8A-DA94E4A4F693}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSAL.ECommerce.Shared", "MSAL.ECommerce.Shared\MSAL.ECommerce.Shared.csproj", "{BFEB665D-3734-430E-A98C-D0C23AF28B10}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{B0526CDF-0AA1-4C23-8065-461E1CC2602D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSAL.ECommerce.ClientWeb", "MSAL.ECommerce.ClientWeb\MSAL.ECommerce.ClientWeb.csproj", "{4033EEEF-26BF-4AAE-BC24-0BC118856BEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSAL.ECommerce.ClientWeb", "MSAL.ECommerce.ClientWeb\MSAL.ECommerce.ClientWeb.csproj", "{4033EEEF-26BF-4AAE-BC24-0BC118856BEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{EBDE3985-2EE1-4185-BABE-45A8EB230EDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBDE3985-2EE1-4185-BABE-45A8EB230EDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBDE3985-2EE1-4185-BABE-45A8EB230EDC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E29EFD01-2FF5-4E4B-9D8A-DA94E4A4F693}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E29EFD01-2FF5-4E4B-9D8A-DA94E4A4F693}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E29EFD01-2FF5-4E4B-9D8A-DA94E4A4F693}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E29EFD01-2FF5-4E4B-9D8A-DA94E4A4F693}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BFEB665D-3734-430E-A98C-D0C23AF28B10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BFEB665D-3734-430E-A98C-D0C23AF28B10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFEB665D-3734-430E-A98C-D0C23AF28B10}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,0 +1,10 @@
+.content {
+  display: flex;
+  flex-direction: row;
+  margin-left: 20px;
+  padding: 10px;
+}
+.content-right {
+  justify-content: left;
+  margin-left: 10%;
+}

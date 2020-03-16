@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -9,7 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Web;
 using MSAL.ECommerce.ClientWeb.Models;
-using MSAL.ECommerce.Shared;
+using MSAL.ECommerce.Shared.Models;
+using MSAL.ECommerce.Shared.Services;
 using Newtonsoft.Json;
 
 namespace MSAL.ECommerce.ClientWeb.Controllers
@@ -18,10 +20,12 @@ namespace MSAL.ECommerce.ClientWeb.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        private readonly IECommerceService _eCommerceService;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IECommerceService eCommerceService, ILogger<HomeController> logger)
         {
+            _eCommerceService = eCommerceService;
             _logger = logger;
         }
 
@@ -37,8 +41,14 @@ namespace MSAL.ECommerce.ClientWeb.Controllers
             try
             {
                 var accessToken = await HttpContext.GetTokenAsync("access_token");
-                var userInfo = await GetUserInfoAsync(accessToken);
-                ViewBag.UserInfo = userInfo;
+
+                // Graph API
+                var userInfo = await GetAdUsersAsync(accessToken);
+                ViewBag.UserInfos = userInfo;
+
+                // Ecommerce API
+                var products = await GetProductsAsync(accessToken);
+                ViewBag.Products = products;
             }
             catch(Exception ex)
             {
@@ -48,13 +58,11 @@ namespace MSAL.ECommerce.ClientWeb.Controllers
             return View();
         }
 
-        private async Task<UserInfo> GetUserInfoAsync(string accessToken)
+        private async Task<IEnumerable<UserInfo>> GetAdUsersAsync(string accessToken)
         {
             var httpClient = new HttpClient();
 
-            var graphApiUrl = "https://graph.microsoft.com/v1.0";
-
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, $"{graphApiUrl}/me");
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, $"{Startup.AppCfg["AppSettings:MsGraphApiUrl"]}/users");
 
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
 
@@ -63,11 +71,17 @@ namespace MSAL.ECommerce.ClientWeb.Controllers
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                var userInfo = JsonConvert.DeserializeObject<UserInfo>(content);
-                return userInfo;
+                var userInfos = JsonConvert.DeserializeObject<UserInfoMetadata>(content).Value;
+                return userInfos;
             }
 
             return null;
+        }
+
+        private async Task<IEnumerable<Product>> GetProductsAsync(string accessToken)
+        {
+            var products = await _eCommerceService.GetAllProductsAsync(accessToken);
+            return products;
         }
 
         [AllowAnonymous]

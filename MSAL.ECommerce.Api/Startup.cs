@@ -56,16 +56,27 @@ namespace MSAL.ECommerce.Api
                     options.Audience = Configuration["AzureAd:Audience"];
                     options.ClaimsIssuer = $"{Configuration["AzureAd:Issuer"]}/{Configuration["AzureAd:TenantId"]}";
                     options.TokenValidationParameters.ValidateIssuer = false;
+                    options.TokenValidationParameters.ValidateAudience = false;
                 });
 
             //services.Configure<OpenIdConnectOptions>(AzureADDefaults.OpenIdScheme, options =>
             //{
-            //    options.Authority = $"{options.Authority}/v2.0/";
-            //    options.ClaimsIssuer = $"{Configuration["AzureAd:Issuer"]}/{Configuration["AzureAd:TenantId"]}";
+            //    //options.Authority = $"{options.Authority}/v2.0/";
+            //    //options.ClaimsIssuer = $"{Configuration["AzureAd:Issuer"]}/{Configuration["AzureAd:TenantId"]}";
 
             //    options.TokenValidationParameters.ValidateAudience = false;
             //    options.TokenValidationParameters.ValidateIssuer = false;
             //});
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowedOrigins", builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                });
+            });
 
             services.AddScoped<ICatalogService, CatalogService>();
 
@@ -87,6 +98,8 @@ namespace MSAL.ECommerce.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("AllowedOrigins");
 
             app.UseAuthentication();
             app.UseAuthorization();            

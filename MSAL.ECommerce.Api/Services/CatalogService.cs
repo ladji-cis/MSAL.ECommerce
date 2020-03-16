@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using MSAL.ECommerce.Shared;
+using MSAL.ECommerce.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MSAL.ECommerce.Api.Storage;
-using MSAL.ECommerce.Shared;
+using MSAL.ECommerce.Shared.Models;
 
 namespace MSAL.ECommerce.Api.Controllers
 {

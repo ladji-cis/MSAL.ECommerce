@@ -1,4 +1,4 @@
-﻿@using MSAL.ECommerce.Shared;
+﻿@using MSAL.ECommerce.Shared.Models;
 
 @{
     ViewData["Title"] = "Privacy";
@@ -8,8 +8,8 @@
 <p>Use this page to detail your site's privacy policy.</p>
 
 @{
-    var userInfo = (UserInfo)ViewBag.UserInfo;
-    if (userInfo == null)
+    var userInfos = (IEnumerable<UserInfo>)ViewBag.UserInfos;
+    if (userInfos == null)
     {
         <pre>
             @ViewBag.Error
@@ -17,7 +17,7 @@
     }
     else
     {
-        <h3>GraphAPI: User Info</h3>
+        <h3>GraphAPI: List of Users</h3>
 
         <div class="container">
             <table class="table">
@@ -30,15 +30,58 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">@userInfo.Id</th>
-                        <td>@userInfo.DisplayName</td>
-                        <td>@userInfo.Email</td>
-                        <td>@userInfo.UserPrincipalName</td>
-                    </tr>
+                    @foreach (var userInfo in userInfos)
+                    {
+                        <tr>
+                            <th scope="row">@userInfo.Id</th>
+                            <td>@userInfo.DisplayName</td>
+                            <td>@userInfo.Email</td>
+                            <td>@userInfo.UserPrincipalName</td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
     }
 }
 
+<hr />
+<h3>ECommerce API: List of products</h3>
+
+@{
+
+    var products = (IEnumerable<Product>)ViewBag.Products;
+
+    if (products == null)
+    {
+        <pre>
+            @ViewBag.Error
+        </pre>
+    }
+    else
+    {
+        <div class="container">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in products.ToList())
+                    {
+                        <tr>
+                            <th scope="row">@product.Id</th>
+                            <td>@product.Name</td>
+                            <td>@product.Price</td>
+                            <td>@product.Category.Name</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+}

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MSAL.ECommerce.ClientDesk.Services;
+using MSAL.ECommerce.Shared.Services;
 using MSAL.ECommerce.Shared;
 using Polly;
 using System;
@@ -15,6 +15,7 @@ using System.Windows;
 using Microsoft.Identity.Client;
 using System.Globalization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using MSAL.ECommerce.Shared.Services;
 
 namespace MSAL.ECommerce.ClientDesk
 {

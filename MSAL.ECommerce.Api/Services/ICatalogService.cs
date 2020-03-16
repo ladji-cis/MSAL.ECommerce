@@ -1,4 +1,4 @@
-﻿using MSAL.ECommerce.Shared;
+﻿using MSAL.ECommerce.Shared.Models;
 using System.Collections.Generic;
 
 namespace MSAL.ECommerce.Api.Storage
