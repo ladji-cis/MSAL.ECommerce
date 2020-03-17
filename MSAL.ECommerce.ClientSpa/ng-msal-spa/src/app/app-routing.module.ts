@@ -4,6 +4,7 @@ import { ProductComponent } from "./product/product.component";
 import { MsalGuard } from "@azure/msal-angular";
 import { ProductDetailComponent } from "./product/product-detail.component";
 import { MyProfileComponent } from "./my-profile/my-profile.component";
+import { PkceComponent } from "./pkce/pkce.component";
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
     path: "myprofile",
     component: MyProfileComponent,
     canActivate: [MsalGuard]
+  },
+  {
+    path: "pkce",
+    component: PkceComponent
   }
 ];
 

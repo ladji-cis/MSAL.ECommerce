@@ -12,6 +12,7 @@ import { ProductService } from "./product/product.service";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { ProductDetailComponent } from "./product/product-detail.component";
 import { Logger, LogLevel } from "msal";
+import { PkceComponent } from "./pkce/pkce.component";
 
 export const protectedResourceMap: [string, string[]][] = [
   [
@@ -32,7 +33,8 @@ export function loggerCallback(logLevel, message, piiEnabled) {
     AppComponent,
     MyProfileComponent,
     ProductComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    PkceComponent
   ],
   imports: [
     BrowserModule,

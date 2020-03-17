@@ -15,6 +15,11 @@
   <a href="#" *ngIf="!loggedIn" (click)="login()" style="color: white;"
     >LogIn</a
   >
+  <div class="spacer"></div>
+  <a href="#" *ngIf="!loggedIn" (click)="loginPkce()" style="color: white;"
+    >LogIn With PKCE</a
+  >
+
   <div *ngIf="loggedIn" style="color: white;" class="welcome">
     <span>Welcome !</span>
     <a routerLink="myprofile"
@@ -22,7 +27,7 @@
     >
     <a href="#" (click)="logout()">LogOut</a>
   </div>
-
+  <div class="spacer"></div>
   <a
     aria-label="Angular on twitter"
     target="_blank"

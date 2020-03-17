@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, ParamMap } from "@angular/router";
+import { Observable } from "rxjs";
+import { switchMap } from "rxjs/operators";
 
 @Component({
   selector: "app-product-detail",
@@ -13,9 +15,9 @@ import { ActivatedRoute } from "@angular/router";
 export class ProductDetailComponent implements OnInit {
   @Input() product: any;
 
-  constructor(private aRoute: ActivatedRoute) {
-    //let id: string = aRoute.params["id"];
-  }
+  private code: Observable<string>;
+
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {}
 }

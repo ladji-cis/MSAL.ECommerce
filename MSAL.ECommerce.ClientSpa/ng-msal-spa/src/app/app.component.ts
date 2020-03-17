@@ -10,6 +10,8 @@ import {
 } from "msal";
 import { Router } from "@angular/router";
 
+import { create } from "pkce";
+
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
@@ -85,6 +87,31 @@ export class AppComponent implements OnInit, OnDestroy {
     } else {
       this.authService.loginPopup(requestObj);
     }
+  }
+  /**
+   * {
+    code_verifier: 'u1ta-MQ0e7TcpHjgz33M2DcBnOQu~aMGxuiZt0QMD1C',
+    code_challenge: 'CUZX5qE8Wvye6kS_SasIsa8MMxacJftmWdsIA_iKp3I'
+}
+   */
+
+  loginPkce() {
+    const pkceCodePair = create();
+    localStorage.setItem("pkce", JSON.stringify(pkceCodePair));
+
+    const url = `
+      https://login.microsoftonline.com/a6c5d2d9-0864-4a8e-a168-edb2f8c5ca81/oauth2/v2.0/authorize?
+      client_id=5a13dd91-a849-488b-8088-c837f5e736d7
+      &response_type=code
+      &redirect_uri=http://localhost:4200/pkce
+      &response_mode=query
+      &scope=openid offline_access https://graph.microsoft.com/user.read
+      &state=12345
+      &code_challenge_method=S256
+      &code_challenge=${pkceCodePair.codeChallenge}
+    `;
+    console.log(url);
+    location.href = url;
   }
 
   logout() {

@@ -12,6 +12,7 @@ namespace MSAL.ECommerce.ClientDesk
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
+    /// https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -62,10 +63,6 @@ namespace MSAL.ECommerce.ClientDesk
                     {
                         App.AuthenticationResult = await App.PublicClientApp
                                                         .AcquireTokenInteractive(scopes)
-                                                        //.WithSystemWebViewOptions(new SystemWebViewOptions
-                                                        //{
-                                                        //    BrowserRedirectError = new Uri("")
-                                                        //})
                                                         //.WithParentActivityOrWindow(new WindowInteropHelper(this).Handle)
                                                         .WithPrompt(Prompt.SelectAccount)
                                                         .ExecuteAsync();

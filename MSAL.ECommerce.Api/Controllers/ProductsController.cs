@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MSAL.ECommerce.Api.Filters;
 using MSAL.ECommerce.Api.Storage;
 using MSAL.ECommerce.Shared.Models;
 
