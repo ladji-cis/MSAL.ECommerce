@@ -102,6 +102,9 @@ namespace MSAL.ECommerce.ClientWeb.Controllers
             {
                 await HttpContext.SignOutAsync("AzureAD");                
                 await HttpContext.SignOutAsync("AzureADCookie");
+
+                // redirect to (IMPLICIT):
+                // https://login.microsoftonline.com/{tenant}/oauth2/v2.0/logout?post_logout_redirect_uri=https://localhost/myapp/
             }
 
             return RedirectToAction("Index");

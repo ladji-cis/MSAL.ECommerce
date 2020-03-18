@@ -95,6 +95,24 @@ export class AppComponent implements OnInit, OnDestroy {
 }
    */
 
+  private createPkce(): any {
+    // https://github.com/bukalapak/pkce-npm
+
+    // let challenge = rand();
+    // let verif = hash256(challenge);
+
+    /*
+    // {
+    //   codeVerifier: 'yzbnPbepnvPl6SUcsBzEf21geEkrzseCDLWAS0uliwKQlDEInT23zV6I2NidkkW4BeF4iVlt6.hdLlCNctqHAPCX7DOYB_7347w1Bk3xmBG10R~Se3~GDTRJfYPUf9.P',
+    //   codeChallenge: 'DDSuq_32Mlv86ucLNbNspsJ1QUZYz7dYf6L1AnN9Adk'
+    // } */
+
+    return {
+      codeChallenge: "codeChallenge",
+      codeVerifier: "codeVerifier"
+    };
+  }
+
   loginPkce() {
     const pkceCodePair = create();
     localStorage.setItem("pkce", JSON.stringify(pkceCodePair));

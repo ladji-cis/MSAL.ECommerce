@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, PLATFORM_INITIALIZER } from "@angular/core";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
+import { visitValue } from "@angular/compiler/src/util";
 
 @Component({
   selector: "app-pkce",
@@ -32,8 +33,8 @@ export class PkceComponent implements OnInit {
       formData.append("Content-Type", "application/x-www-form-urlencoded");
       formData.append("scope", "https://graph.microsoft.com/user.read");
       formData.append("code", this.code);
-      formData.append("redirect_url", "http://localhost:4200/pkce");
-      formData.append("gran_type", "authorization_code");
+      formData.append("redirect_url", "http://localhost:4200");
+      formData.append("grant_type", "authorization_code");
       formData.append("client_secret", "vA@STdocFyE5wt_FKlkzqlxct.fH.379");
       formData.append("code_verifier", pkce.codeVerifier);
 
